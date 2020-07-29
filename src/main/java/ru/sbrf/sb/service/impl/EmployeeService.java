@@ -1,6 +1,5 @@
-package ru.sbrf.sb.service;
+package ru.sbrf.sb.service.impl;
 
-import ru.sbrf.sb.aspect.Logging;
 import ru.sbrf.sb.domain.Employee;
 
 import java.util.List;

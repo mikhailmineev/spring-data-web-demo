@@ -50,8 +50,8 @@ public class KeycloakTokenServiceImpl implements KeycloakTokenService {
         }
 
         TokenVerifier<AccessToken> verifier = TokenVerifier.create(token, AccessToken.class);
-        PublicKey publicKey = getRealmPublicKey(verifier.getHeader());
-        //PublicKey publicKey = getKey(key);
+        //PublicKey publicKey = getRealmPublicKey(verifier.getHeader());
+        PublicKey publicKey = getKey(key);
         return verifier.publicKey(publicKey)
                 .withChecks(checks)
                 .verify()

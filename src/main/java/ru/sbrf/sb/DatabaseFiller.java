@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import ru.sbrf.sb.domain.Employee;
 import ru.sbrf.sb.domain.Project;
 import ru.sbrf.sb.repository.EmployeeRepository;
@@ -13,8 +12,6 @@ import ru.sbrf.sb.repository.ProjectRepository;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

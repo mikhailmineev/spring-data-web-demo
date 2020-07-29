@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sbrf.sb.domain.Employee;
 import ru.sbrf.sb.repository.EmployeeRepository;
-import ru.sbrf.sb.service.EmployeeService;
 
 import java.util.List;
 
