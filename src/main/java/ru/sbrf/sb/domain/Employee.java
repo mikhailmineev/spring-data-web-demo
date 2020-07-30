@@ -17,7 +17,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "statusIdSeq")
-    private long id;
+    private Long id;
 
     private String firstName;
 

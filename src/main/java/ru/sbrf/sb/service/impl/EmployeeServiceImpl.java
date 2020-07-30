@@ -3,8 +3,10 @@ package ru.sbrf.sb.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.sbrf.sb.domain.Employee;
 import ru.sbrf.sb.repository.EmployeeRepository;
+import ru.sbrf.sb.service.EmployeeService;
 
 import java.util.List;
 
@@ -23,5 +25,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllEmpoloyees() {
         return employeeRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Employee addEmployee(Employee employee) {
+        return employeeRepository.save(employee);
     }
 }

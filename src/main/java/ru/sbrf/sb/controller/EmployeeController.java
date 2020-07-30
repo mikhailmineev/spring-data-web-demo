@@ -6,12 +6,9 @@ import org.keycloak.common.VerificationException;
 import org.keycloak.representations.AccessToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.sbrf.sb.domain.Employee;
-import ru.sbrf.sb.service.impl.EmployeeService;
+import ru.sbrf.sb.service.EmployeeService;
 import ru.sbrf.sb.service.KeycloakTokenService;
 
 import java.util.List;
@@ -46,5 +43,11 @@ public class EmployeeController {
         }
 
         return ResponseEntity.ok(employeeService.getAllEmpoloyees());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee addEmployee(@RequestBody Employee employee) {
+        return employeeService.addEmployee(employee);
     }
 }

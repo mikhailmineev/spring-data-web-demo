@@ -1,4 +1,4 @@
-package ru.sbrf.sb.service.impl;
+package ru.sbrf.sb.service;
 
 import ru.sbrf.sb.domain.Employee;
 
@@ -8,4 +8,6 @@ public interface EmployeeService {
     Employee getOneEmpoloyee(long id);
 
     List<Employee> getAllEmpoloyees();
+
+    Employee addEmployee(Employee employee);
 }
