@@ -30,16 +30,9 @@ public class EmployeeController {
 
     @GetMapping
     public ResponseEntity<List<Employee>> getAllEmpoloyers(@RequestHeader(value = "Authorization", required = false) String authHeader) throws VerificationException {
-        if (authHeader == null) {
-            return ResponseEntity.badRequest().build();
-        } else {
-            AccessToken accessToken = keycloakTokenVerifier.authenticateFromAuthHeader(authHeader);
-
-            String subject = accessToken.getSubject();
-            boolean contains = accessToken.getRealmAccess().getRoles().contains("read-employers");
-            if (!contains) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
+        ResponseEntity<List<Employee>> badResponse = getEmployeeResponseEntity(authHeader);
+        if (badResponse != null) {
+            return badResponse;
         }
 
         return ResponseEntity.ok(employeeService.getAllEmpoloyees());
@@ -47,7 +40,26 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+    public ResponseEntity<Employee> addEmployee(@RequestHeader(value = "Authorization", required = false) String authHeader, @RequestBody Employee employee) throws VerificationException {
+        ResponseEntity<Employee> badResponse = getEmployeeResponseEntity(authHeader);
+        if (badResponse != null) {
+            return badResponse;
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addEmployee(employee));
+    }
+
+    private <T> ResponseEntity<T> getEmployeeResponseEntity(String authHeader) throws VerificationException {
+        if (authHeader == null) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            AccessToken accessToken = keycloakTokenVerifier.authenticateFromAuthHeader(authHeader);
+
+            boolean contains = accessToken.getRealmAccess().getRoles().contains("read-employers");
+            if (!contains) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        }
+        return null;
     }
 }
