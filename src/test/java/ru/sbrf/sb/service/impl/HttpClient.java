@@ -33,18 +33,15 @@ public class HttpClient {
     private static final String HTTPS = "https";
     private static final String HTTP = "http";
 
-    public static ResteasyClient getHttpsClient(SSLContext sslContext) throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+    public static ResteasyClient getHttpsClient() {
         RegistryBuilder<ConnectionSocketFactory> registryBuilder = RegistryBuilder
                 .<ConnectionSocketFactory>create()
                 .register(HTTP, PlainConnectionSocketFactory.getSocketFactory());
 
-        if (sslContext != null) {
-            SSLContextBuilder builder = new SSLContextBuilder();
-            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-            SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(
-                    builder.build(), new NoopHostnameVerifier());
-            registryBuilder.register(HTTPS, sslSocketFactory);
-        }
+        SSLContext sslContext = new SslUtil().getSslContext();
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(
+                sslContext, new NoopHostnameVerifier());
+        registryBuilder.register(HTTPS, sslSocketFactory);
 
         final Registry<ConnectionSocketFactory> socketFactoryRegistry = registryBuilder.build();
 
@@ -61,17 +58,5 @@ public class HttpClient {
                 .httpEngine(new ApacheHttpClient43Engine(httpClient))
                 .hostnameVerification(ResteasyClientBuilder.HostnameVerificationPolicy.ANY)
                 .build();
-    }
-
-    public static ResteasyClient getHttpsClient() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-
-        SSLContext sslContext = null;
-        try {
-            sslContext = SSLContext.getDefault();
-        } catch (NoSuchAlgorithmException e) {
-            log.error("Error in configuration SSL", e);
-        }
-
-        return getHttpsClient(sslContext);
     }
 }

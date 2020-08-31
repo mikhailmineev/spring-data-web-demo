@@ -12,17 +12,15 @@ import java.security.NoSuchAlgorithmException;
 public class SslTest {
 
     @Test
-    public void test() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-        String fpaTokenUrl = "https://localhost:32773";
-        SSLContext sslContext = new SslUtil().getSslContextIfNeeded(fpaTokenUrl, "/Users/a18537967/dev/fpa-udar/keystore.jks", "password");
+    public void test() {
+        String fpaTokenUrl = "https://localhost:32771";
 
-        var client = HttpClient.getHttpsClient(sslContext);
+        var client = HttpClient.getHttpsClient();
         ResteasyWebTarget target = client.target(UriBuilder.fromPath(fpaTokenUrl));
         TokenClient tokenClient = target
                 .proxyBuilder(TokenClient.class)
                 .classloader(TokenClient.class.getClassLoader())
                 .build();
-        var response = tokenClient.getToken();
-
+        tokenClient.getToken();
     }
 }
