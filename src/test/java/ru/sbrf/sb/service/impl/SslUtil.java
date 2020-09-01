@@ -20,7 +20,7 @@ public class SslUtil {
             KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             keyManagerFactory.init(ks, keyStorePasswordArray);
 
-            KeyStore ts = getKeyStoreFromFile("./src/main/resources/truststore.jks", "password");
+            KeyStore ts = getKeyStoreFromFile("./src/main/resources/keystore.jks", "password");
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             trustManagerFactory.init(ts);
 

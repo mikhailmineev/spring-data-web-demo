@@ -13,7 +13,7 @@ public class SslTest {
 
     @Test
     public void test() {
-        String fpaTokenUrl = "https://localhost:32771";
+        String fpaTokenUrl = "https://localhost:32773";
 
         var client = HttpClient.getHttpsClient();
         ResteasyWebTarget target = client.target(UriBuilder.fromPath(fpaTokenUrl));
